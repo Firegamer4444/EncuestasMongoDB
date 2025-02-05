@@ -1,24 +1,55 @@
 package aed.models;
 
-import aed.RespuestaItem;
+
 import org.bson.types.ObjectId;
 import java.util.Date;
 import java.util.List;
 
 public class Respuesta {
     private ObjectId id;
-    private ObjectId encuestaId;
+    private ObjectId preguntaId;
     private String usuarioId;
-    private List<RespuestaItem> respuestas;
-    private Date fechaRespuesta;
+    private ObjectId opcionId;
 
-    public Respuesta(ObjectId encuestaId, String usuarioId, List<RespuestaItem> respuestas) {
+    public Respuesta(ObjectId preguntaId, String usuarioId, ObjectId opcionId) {
         this.id = new ObjectId();
-        this.encuestaId = encuestaId;
+        this.preguntaId = preguntaId;
         this.usuarioId = usuarioId;
-        this.respuestas = respuestas;
-        this.fechaRespuesta = new Date();
+        this.opcionId = opcionId;
     }
 
     // Getters y Setters
+
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
+
+    public ObjectId getPreguntaId() {
+        return preguntaId;
+    }
+
+    public void setPreguntaId(ObjectId preguntaId) {
+        this.preguntaId = preguntaId;
+    }
+
+    public String getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(String usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
+    public ObjectId getOpcionId() {
+        return opcionId;
+    }
+
+    public void setOpcionId(ObjectId opcionId) {
+        this.opcionId = opcionId;
+    }
 }

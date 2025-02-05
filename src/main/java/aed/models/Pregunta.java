@@ -6,15 +6,38 @@ import java.util.List;
 public class Pregunta {
     private ObjectId id;
     private String pregunta;
-    private String tipo; // "opcion_multiple" o "texto"
-    private List<String> opciones;
+    private List<ObjectId> opcionesId;
 
-    public Pregunta(String pregunta, String tipo, List<String> opciones) {
+    public Pregunta(ObjectId idEncuesta , String pregunta, List<ObjectId> opciones) {
         this.id = new ObjectId();
         this.pregunta = pregunta;
-        this.tipo = tipo;
-        this.opciones = opciones;
+        this.opcionesId = opciones;
     }
 
     // Getters y Setters
+
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
+
+    public String getPregunta() {
+        return pregunta;
+    }
+
+    public void setPregunta(String pregunta) {
+        this.pregunta = pregunta;
+    }
+
+    public List<ObjectId> getOpcionesId() {
+        return opcionesId;
+    }
+
+    public void setOpcionesId(List<ObjectId> opcionesId) {
+        this.opcionesId = opcionesId;
+    }
 }

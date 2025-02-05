@@ -18,4 +18,37 @@ public class Encuesta {
     }
 
     // Getters y Setters
+
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public List<ObjectId> getPreguntasIds() {
+        return preguntasIds;
+    }
+
+    public void setPreguntasIds(List<ObjectId> preguntasIds) {
+        this.preguntasIds = preguntasIds;
+    }
 }

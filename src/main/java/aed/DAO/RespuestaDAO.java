@@ -14,15 +14,20 @@ public class RespuestaDAO {
         this.collection = database.getCollection("respuestas");
     }
 
-    public void insertarRespuesta(String encuestaId, String usuarioId, String preguntaId, String respuesta) {
-        Document respuestaDoc = new Document("encuestaId", encuestaId)
+    public void insertarRespuesta(String preguntaId, String usuarioId, String opcionId) {
+        Document respuesta = new Document("preguntaId", preguntaId)
                 .append("usuarioId", usuarioId)
-                .append("respuestas", Arrays.asList(
-                        new Document("preguntaId", preguntaId).append("respuesta", respuesta)
-                ))
-                .append("fechaRespuesta", new java.util.Date());
+                .append("opcionId", opcionId);
 
-        collection.insertOne(respuestaDoc);
-        System.out.println("Respuesta guardada para usuario: " + usuarioId);
+        collection.insertOne(respuesta);
     }
+
+    public int obtenerNumeroRespuestas(String preguntaId) {
+        return (int) collection.countDocuments(new Document("preguntaId", preguntaId));
+    }
+
+    public int obtenerNumeroRespuestasPorOpcion(String preguntaId, String opcionId) {
+        return (int) collection.countDocuments(new Document("preguntaId", preguntaId).append("opcionId", opcionId));
+    }
+
 }
