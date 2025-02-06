@@ -39,8 +39,9 @@ public class EncuestaDAO {
     public List<PreguntaPropertyBean> obtenerPreguntas(ObjectId encuestaId){
         List<PreguntaPropertyBean> preguntas = new ArrayList<>();
         Document encuesta = collection.find(new Document("_id", encuestaId)).first();
-        List<String> preguntasIds = encuesta.getList("preguntasIds", String.class);
-        for (String preguntaId : preguntasIds) {
+        List<ObjectId> preguntasIds = encuesta.getList("preguntasIds", ObjectId.class);
+
+        for (ObjectId preguntaId : preguntasIds) {
             Document pregunta = preguntasCollection.find(new Document("_id", preguntaId)).first();
             PreguntaPropertyBean preguntaBean = new PreguntaPropertyBean(pregunta);
             preguntas.add(preguntaBean);
@@ -67,6 +68,42 @@ public class EncuestaDAO {
     public void eliminarEncuesta(ObjectId encuestaId) {
         Document encuesta = collection.find(new Document("_id", encuestaId)).first();
         collection.deleteOne(encuesta);
+    }
+
+    public ObjectId agregarPregunta(ObjectId encuestaId, String titulo) {
+        Document pregunta = new Document("titulo", titulo)
+                .append("opciones", Collections.emptyList());
+
+        preguntasCollection.insertOne(pregunta);
+        ObjectId preguntaId = pregunta.getObjectId("_id");
+
+        Document encuesta = collection.find(new Document("_id", encuestaId)).first();
+        List<ObjectId> preguntasIds = encuesta.getList("preguntasIds", ObjectId.class);
+        preguntasIds.add(preguntaId);
+        encuesta.append("preguntasIds", preguntasIds);
+        collection.findOneAndReplace(new Document("_id", encuestaId), encuesta);
+
+        return preguntaId;
+    }
+
+    public void eliminarPregunta(ObjectId encuestaId, ObjectId preguntaId) {
+        Document encuesta = collection.find(new Document("_id", encuestaId)).first();
+        Document pregunta = preguntasCollection.find(new Document("_id", preguntaId)).first();
+        preguntasCollection.deleteOne(pregunta);
+        encuesta.getList("preguntasIds", ObjectId.class).remove(preguntaId);
+        collection.findOneAndReplace(new Document("_id", encuestaId), encuesta);
+    }
+
+    public List<EncuestaPropertyBean> buscarEncuesta(String titulo){
+        List<EncuestaPropertyBean> encuestas = new ArrayList<>();
+        FindIterable<Document> encuestasDocs = collection.find(new Document("titulo", new Document("$regex", titulo).append("$options", "i")));;
+
+        for (Document doc : encuestasDocs) {
+            EncuestaPropertyBean encuesta = new EncuestaPropertyBean(doc);
+            encuestas.add(encuesta);
+        }
+
+        return encuestas;
     }
 
 }

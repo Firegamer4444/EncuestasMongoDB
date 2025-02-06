@@ -8,12 +8,12 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <TableView fx:id="preguntasTable" prefHeight="200.0" prefWidth="200.0">
         <columns>
           <TableColumn fx:id="preguntaColumn" prefWidth="75.0" text="Pregunta" />
-          <TableColumn fx:id="numeroRespuestasColumn" prefWidth="75.0" text="Numero de respuestas" />
+          <TableColumn fx:id="numeroPreguntasColumn" prefWidth="75.0" text="Numero de preguntas" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -29,9 +29,9 @@
             <Button defaultButton="true" mnemonicParsing="false" onAction="#onSelectAllAction" text="Mostrar todo" />
             <Button mnemonicParsing="false" onAction="#onGoBackAction" text="Volver" />
             <Button mnemonicParsing="false" onAction="#onAddAction" text="Añadir" />
-            <Button mnemonicParsing="false" onAction="#onRemoveAction" text="Eliminar" />
-            <Button mnemonicParsing="false" onAction="#onModifyAction" text="Editar" />
-            <Button mnemonicParsing="false" onAction="#onAnswersAction" text="Ver respuestas" />
+            <Button fx:id="eliminarButton" mnemonicParsing="false" onAction="#onRemoveAction" text="Eliminar" />
+            <Button fx:id="editarButton" mnemonicParsing="false" onAction="#onModifyAction" text="Editar" />
+            <Button fx:id="verRespuestasButton" mnemonicParsing="false" onAction="#onAnswersAction" text="Ver respuestas" />
          </children>
          <opaqueInsets>
             <Insets top="5.0" />

@@ -1,9 +1,7 @@
 package aed.models;
 
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -11,13 +9,16 @@ import org.bson.types.ObjectId;
 public class PreguntaPropertyBean {
 
     private ObjectProperty<ObjectId> id = new SimpleObjectProperty<>();
-    private StringProperty pregunta;
-    private ListProperty<String> opciones;
+    private StringProperty pregunta = new SimpleStringProperty();
+    private ListProperty<String> opciones = new SimpleListProperty<>(FXCollections.observableArrayList());
 
     public PreguntaPropertyBean(Document doc) {
         this.id.set(doc.getObjectId("_id"));
-        this.pregunta.set(doc.getString("pregunta"));
+        this.pregunta.set(doc.getString("titulo"));
         this.opciones.setAll(doc.getList("opciones", String.class));
+    }
+
+    public PreguntaPropertyBean() {
     }
 
     // getters and setters

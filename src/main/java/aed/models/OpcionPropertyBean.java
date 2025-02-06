@@ -1,21 +1,23 @@
 package aed.models;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
+import org.bson.Document;
+import org.bson.types.ObjectId;
 
 public class OpcionPropertyBean {
 
+    private ObjectProperty<ObjectId> id = new SimpleObjectProperty<>();
     private StringProperty tituloRespuesta = new SimpleStringProperty();
     private StringProperty porcentaje = new SimpleStringProperty();
-    private IntegerProperty respuestasTotales = new SimpleIntegerProperty();
-    private IntegerProperty respuestasOpcion = new SimpleIntegerProperty();
 
-    public OpcionPropertyBean(String tituloRespuesta, int respuestasOpcion) {
-        this.tituloRespuesta.set(tituloRespuesta);
-        this.respuestasOpcion.set(respuestasOpcion);
+    public OpcionPropertyBean (Document document){
+        this.id.set(document.getObjectId("_id"));
+        this.tituloRespuesta.set(document.getString("tituloOpcion"));
     }
+
+    public OpcionPropertyBean() {
+    }
+
 
     // getters and setters
 
@@ -44,27 +46,15 @@ public class OpcionPropertyBean {
         this.porcentaje.set(porcentaje);
     }
 
-    public int getRespuestasTotales() {
-        return respuestasTotales.get();
+    public ObjectId getId() {
+        return id.get();
     }
 
-    public IntegerProperty respuestasTotalesProperty() {
-        return respuestasTotales;
+    public ObjectProperty<ObjectId> idProperty() {
+        return id;
     }
 
-    public void setRespuestasTotales(int respuestasTotales) {
-        this.respuestasTotales.set(respuestasTotales);
-    }
-
-    public int getRespuestasOpcion() {
-        return respuestasOpcion.get();
-    }
-
-    public IntegerProperty respuestasOpcionProperty() {
-        return respuestasOpcion;
-    }
-
-    public void setRespuestasOpcion(int respuestasOpcion) {
-        this.respuestasOpcion.set(respuestasOpcion);
+    public void setId(ObjectId id) {
+        this.id.set(id);
     }
 }

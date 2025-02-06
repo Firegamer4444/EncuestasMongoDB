@@ -1,5 +1,6 @@
 package aed.controllers;
 
+import aed.EncuestaApp;
 import aed.models.EncuestaPropertyBean;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
@@ -106,12 +107,22 @@ public class EncuestaController implements Initializable {
 
     @FXML
     void onEditEncuestaAction(ActionEvent event) {
-
+        preguntaController.setRuta("Encuesta: " + encuestaSeleccionada.get().getTitulo());
+        preguntaController.setIdEncuesta(encuestaSeleccionada.get().getId());
+        preguntaController.getPreguntas().setAll(encuestaDao.obtenerPreguntas(encuestaSeleccionada.get().getId()));
+        EncuestaApp.mostrarPregunta();
     }
 
     @FXML
     void onFindAction(ActionEvent event) {
+
         TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Buscar Encuesta");
+        dialog.setHeaderText("Introduce el nombre de la encuesta");
+        dialog.setContentText("Nombre:");
+        dialog.showAndWait().ifPresent(titulo -> {
+            encuestas.setAll(encuestaDao.buscarEncuesta(titulo));
+        });
     }
 
     @FXML
