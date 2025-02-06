@@ -27,11 +27,11 @@
       </HBox>
    </bottom>
    <center>
-      <SplitPane fx:id="respuestasSplitPane" BorderPane.alignment="CENTER">
+      <SplitPane fx:id="opcionesSplitPane" BorderPane.alignment="CENTER">
          <items>
-            <TableView fx:id="respuestasTable" prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="opcionesTable" prefHeight="200.0" prefWidth="200.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="Respuesta" />
+                <TableColumn prefWidth="75.0" text="Titulo opcion" />
                 <TableColumn prefWidth="75.0" text="Porcentaje" />
               </columns>
                <columnResizePolicy>
