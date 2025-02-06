@@ -6,6 +6,7 @@ import aed.controllers.PreguntaController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import aed.dao.*;
 
 public class EncuestaApp extends Application {
 
@@ -20,6 +21,13 @@ public class EncuestaApp extends Application {
     private static Stage encuestaStage;
     private static Stage preguntaStage = new Stage();
     private static Stage opcionStage = new Stage();
+
+    // Daos
+
+    public static EncuestaDAO encuestaDao = new EncuestaDAO();
+    public static PreguntaDAO preguntaDao = new PreguntaDAO();
+    public static OpcionDAO opcionDao = new OpcionDAO();
+    public static RespuestaDAO respuestaDao = new RespuestaDAO();
 
     @Override
     public void start(Stage stage) throws Exception {

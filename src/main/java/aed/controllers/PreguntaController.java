@@ -29,9 +29,6 @@ public class PreguntaController implements Initializable {
     private TableColumn<PreguntaPropertyBean, String> preguntaColumn;
 
     @FXML
-    private SplitPane preguntasSplitPane;
-
-    @FXML
     private TableView<PreguntaPropertyBean> preguntasTable;
 
     @FXML
@@ -77,6 +74,11 @@ public class PreguntaController implements Initializable {
 
     @FXML
     void onRemoveAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onSelectAllAction(ActionEvent event) {
 
     }
 

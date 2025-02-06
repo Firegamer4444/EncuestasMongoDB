@@ -1,11 +1,9 @@
-package aed.DAO;
+package aed.dao;
 
 import aed.MongoDBConnection;
-import aed.models.OpcionPropertyBean;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 
 public class OpcionDAO {

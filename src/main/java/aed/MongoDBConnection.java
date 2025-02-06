@@ -6,7 +6,7 @@ import com.mongodb.client.MongoDatabase;
 
 public class MongoDBConnection {
     private static final String URI = "mongodb://localhost:27017"; // Reemplaza con tu URI si usas Mongo Atlas
-    private static final String DATABASE_NAME = "encuestasDB";
+    private static final String DATABASE_NAME = "encuestaDB";
 
     private static MongoClient mongoClient = null;
     private static MongoDatabase database = null;

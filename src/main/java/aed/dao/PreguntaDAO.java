@@ -1,4 +1,4 @@
-package aed.DAO;
+package aed.dao;
 
 import aed.MongoDBConnection;
 import aed.models.OpcionPropertyBean;

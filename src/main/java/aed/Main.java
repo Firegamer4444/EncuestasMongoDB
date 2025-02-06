@@ -1,7 +1,5 @@
 package aed;
 
-import aed.DAO.EncuestaDAO;
-import aed.DAO.RespuestaDAO;
 import javafx.application.Application;
 
 public class Main {

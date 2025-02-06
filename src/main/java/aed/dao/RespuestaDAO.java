@@ -1,10 +1,9 @@
-package aed.DAO;
+package aed.dao;
 
 import aed.MongoDBConnection;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-import java.util.Arrays;
 
 public class RespuestaDAO {
     private final MongoCollection<Document> collection;

@@ -1,8 +1,7 @@
-package aed.DAO;
+package aed.dao;
 
 import aed.MongoDBConnection;
 import aed.models.EncuestaPropertyBean;
-import aed.models.Pregunta;
 import aed.models.PreguntaPropertyBean;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -12,6 +11,7 @@ import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class EncuestaDAO {
@@ -49,12 +49,24 @@ public class EncuestaDAO {
         return preguntas;
     }
 
-    public void insertarEncuesta(String titulo, String descripcion, String... preguntasIds) {
+    public ObjectId insertarEncuesta(String titulo, String descripcion) {
         Document encuesta = new Document("titulo", titulo)
                 .append("descripcion", descripcion)
-                .append("preguntasIds", Arrays.asList(preguntasIds));
+                .append("preguntasIds", Collections.emptyList());
 
         collection.insertOne(encuesta);
+        return encuesta.getObjectId("_id");
+    }
+
+    public void actualizarEncuesta(ObjectId encuestaId, String titulo, String descripcion) {
+        Document encuesta = collection.find(new Document("_id", encuestaId)).first();
+        encuesta.append("titulo", titulo).append("descripcion", descripcion);
+        collection.findOneAndReplace(new Document("_id", encuestaId), encuesta);
+    }
+
+    public void eliminarEncuesta(ObjectId encuestaId) {
+        Document encuesta = collection.find(new Document("_id", encuestaId)).first();
+        collection.deleteOne(encuesta);
     }
 
 }

@@ -18,9 +18,6 @@ public class OpcionController implements Initializable {
     // view
 
     @FXML
-    private SplitPane opcionesSplitPane;
-
-    @FXML
     private TableView<OpcionPropertyBean> opcionesTable;
 
     @FXML
@@ -61,6 +58,11 @@ public class OpcionController implements Initializable {
 
     @FXML
     void onRemoveAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onSelectAllAction(ActionEvent event) {
 
     }
 

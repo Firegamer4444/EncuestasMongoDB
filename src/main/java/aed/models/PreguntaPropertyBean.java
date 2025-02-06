@@ -4,50 +4,58 @@ import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
 public class PreguntaPropertyBean {
 
-    private ObjectProperty<ObjectId> idProperty = new SimpleObjectProperty<>();
-    private StringProperty preguntaProperty;
-    private ListProperty<String> opcionesProperty;
+    private ObjectProperty<ObjectId> id = new SimpleObjectProperty<>();
+    private StringProperty pregunta;
+    private ListProperty<String> opciones;
 
     public PreguntaPropertyBean(Document doc) {
-        this.idProperty.set(doc.getObjectId("_id"));
-        this.preguntaProperty.set(doc.getString("pregunta"));
-        this.opcionesProperty.setAll(doc.getList("opciones", String.class));
+        this.id.set(doc.getObjectId("_id"));
+        this.pregunta.set(doc.getString("pregunta"));
+        this.opciones.setAll(doc.getList("opciones", String.class));
     }
 
-    public ObjectId getIdProperty() {
-        return idProperty.get();
+    // getters and setters
+
+
+    public ObjectId getId() {
+        return id.get();
     }
 
-    public ObjectProperty<ObjectId> idPropertyProperty() {
-        return idProperty;
+    public ObjectProperty<ObjectId> idProperty() {
+        return id;
     }
 
-    public void setIdProperty(ObjectId idProperty) {
-        this.idProperty.set(idProperty);
+    public void setId(ObjectId id) {
+        this.id.set(id);
     }
 
-    public String getPreguntaProperty() {
-        return preguntaProperty.get();
+    public String getPregunta() {
+        return pregunta.get();
     }
 
-    public StringProperty preguntaPropertyProperty() {
-        return preguntaProperty;
+    public StringProperty preguntaProperty() {
+        return pregunta;
     }
 
-    public void setPreguntaProperty(String preguntaProperty) {
-        this.preguntaProperty.set(preguntaProperty);
+    public void setPregunta(String pregunta) {
+        this.pregunta.set(pregunta);
     }
 
-    public ListProperty<String> getOpcionesProperty() {
-        return opcionesProperty;
+    public ObservableList<String> getOpciones() {
+        return opciones.get();
     }
 
-    public void setOpcionesProperty(ListProperty<String> opcionesProperty) {
-        this.opcionesProperty = opcionesProperty;
+    public ListProperty<String> opcionesProperty() {
+        return opciones;
+    }
+
+    public void setOpciones(ObservableList<String> opciones) {
+        this.opciones.set(opciones);
     }
 }

@@ -11,66 +11,69 @@ import org.bson.types.ObjectId;
 
 public class EncuestaPropertyBean {
 
-    private ObjectProperty<ObjectId> idProperty = new SimpleObjectProperty<>();
-    private ObjectProperty<String> tituloProperty = new SimpleObjectProperty<>();
-    private ObjectProperty<String> descripcionProperty = new SimpleObjectProperty<>();
-    private ListProperty<ObjectId> preguntasIdsProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
+    private ObjectProperty<ObjectId> id = new SimpleObjectProperty<>();
+    private ObjectProperty<String> titulo = new SimpleObjectProperty<>();
+    private ObjectProperty<String> descripcion = new SimpleObjectProperty<>();
+    private ListProperty<ObjectId> preguntasIds = new SimpleListProperty<>(FXCollections.observableArrayList());
 
     public EncuestaPropertyBean(Document doc) {
-        this.idProperty.set(doc.getObjectId("_id"));
-        this.tituloProperty.set(doc.getString("titulo"));
-        this.descripcionProperty.set(doc.getString("descripcion"));
-        this.preguntasIdsProperty.setAll(doc.getList("preguntasIds", ObjectId.class));
+        this.id.set(doc.getObjectId("_id"));
+        this.titulo.set(doc.getString("titulo"));
+        this.descripcion.set(doc.getString("descripcion"));
+        this.preguntasIds.setAll(doc.getList("preguntasIds", ObjectId.class));
+    }
+
+    public EncuestaPropertyBean() {
     }
 
     // getters y setters
 
 
-    public ObjectId getIdProperty() {
-        return idProperty.get();
+    public ObjectId getId() {
+        return id.get();
     }
 
-    public ObjectProperty<ObjectId> idPropertyProperty() {
-        return idProperty;
+    public ObjectProperty<ObjectId> idProperty() {
+        return id;
     }
 
-    public void setIdProperty(ObjectId idProperty) {
-        this.idProperty.set(idProperty);
+    public void setId(ObjectId id) {
+        this.id.set(id);
     }
 
-    public String getTituloProperty() {
-        return tituloProperty.get();
+    public String getTitulo() {
+        return titulo.get();
     }
 
-    public ObjectProperty<String> tituloPropertyProperty() {
-        return tituloProperty;
+    public ObjectProperty<String> tituloProperty() {
+        return titulo;
     }
 
-    public void setTituloProperty(String tituloProperty) {
-        this.tituloProperty.set(tituloProperty);
+    public void setTitulo(String titulo) {
+        this.titulo.set(titulo);
     }
 
-    public String getDescripcionProperty() {
-        return descripcionProperty.get();
+    public String getDescripcion() {
+        return descripcion.get();
     }
 
-    public ObjectProperty<String> descripcionPropertyProperty() {
-        return descripcionProperty;
+    public ObjectProperty<String> descripcionProperty() {
+        return descripcion;
     }
 
-    public void setDescripcionProperty(String descripcionProperty) {
-        this.descripcionProperty.set(descripcionProperty);
+    public void setDescripcion(String descripcion) {
+        this.descripcion.set(descripcion);
     }
 
-    public ObservableList<ObjectId> getPreguntasIdsProperty() {
-        return preguntasIdsProperty.get();
+    public ObservableList<ObjectId> getPreguntasIds() {
+        return preguntasIds.get();
     }
 
-    public ListProperty<ObjectId> preguntasIdsPropertyProperty() {
-        return preguntasIdsProperty;
+    public ListProperty<ObjectId> preguntasIdsProperty() {
+        return preguntasIds;
     }
 
-    public void setPreguntasIdsProperty(ObservableList<ObjectId> preguntasIdsProperty) {
-        this.preguntasIdsProperty.set(preguntasIdsProperty);
+    public void setPreguntasIds(ObservableList<ObjectId> preguntasIds) {
+        this.preguntasIds.set(preguntasIds);
     }
 }
