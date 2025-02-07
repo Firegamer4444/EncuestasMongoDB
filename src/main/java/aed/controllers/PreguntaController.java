@@ -101,7 +101,7 @@ public class PreguntaController implements Initializable {
         CrudTituloDialog dialog = new CrudTituloDialog();
         dialog.showAndWait().ifPresent(titulo -> {
             PreguntaPropertyBean pregunta = new PreguntaPropertyBean();
-            encuestaDao.agregarPregunta(idEncuesta.get(), titulo);
+            pregunta.setId( encuestaDao.agregarPregunta(idEncuesta.get(), titulo));
             pregunta.setPregunta(titulo);
             preguntas.add(pregunta);
         });

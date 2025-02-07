@@ -119,9 +119,9 @@ public class OpcionController implements Initializable {
     public void bindearOpciones(){
         for (OpcionPropertyBean opcion : getOpciones()) {
             opcion.porcentajeProperty().bind(Bindings.createStringBinding(() -> {
-                int total = preguntaDao.obtenerNumeroRespuestasOpcion(getIdPregunta(), opcion.getId());
+                int total = preguntaDao.obtenerNumeroRespuestasOpcion(opcion.getId());
                 int totalPreguntas = preguntaDao.obtenerNumeroOpciones(getIdPregunta());
-                return totalPreguntas == 0 ? "0%" : String.format("%.2f%%", (total * 100.0) / totalPreguntas);
+                return total == 0 ? "0%" : String.format("%.2f%%", (total * 100.0) / totalPreguntas);
             }, getOpciones()));
         }
     }

@@ -6,6 +6,7 @@ import aed.models.PreguntaPropertyBean;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -17,11 +18,15 @@ import java.util.List;
 public class EncuestaDAO {
     private final MongoCollection<Document> collection;
     private final MongoCollection<Document> preguntasCollection;
+    private final MongoCollection<Document> opcionesCollection;
+    private final MongoCollection<Document> respuestasCollection;
 
     public EncuestaDAO() {
         MongoDatabase database = MongoDBConnection.getDatabase();
         this.collection = database.getCollection("encuestas");
         this.preguntasCollection = database.getCollection("preguntas");
+        this.opcionesCollection = database.getCollection("opciones");
+        this.respuestasCollection = database.getCollection("respuestas");
     }
 
     public List<EncuestaPropertyBean> obtenerEncuestas() {
@@ -68,11 +73,29 @@ public class EncuestaDAO {
     public void eliminarEncuesta(ObjectId encuestaId) {
         Document encuesta = collection.find(new Document("_id", encuestaId)).first();
         collection.deleteOne(encuesta);
+
+        // Eliminar preguntas, opciones y respuestas
+
+        List<ObjectId> preguntasIds = encuesta.getList("preguntasIds", ObjectId.class);
+        for (ObjectId preguntaId : preguntasIds) {
+            Document pregunta = preguntasCollection.find(new Document("_id", preguntaId)).first();
+            preguntasCollection.deleteOne(pregunta);
+
+            List<ObjectId> opcionesIds = pregunta.getList("opcionesIds", ObjectId.class);
+            for (ObjectId opcionId : opcionesIds) {
+                opcionesCollection.deleteMany(Filters.eq("_id", opcionId));
+                respuestasCollection.deleteMany(Filters.eq("opcionId", opcionId.toString()));
+            }
+        }
+
+
+
+
     }
 
     public ObjectId agregarPregunta(ObjectId encuestaId, String titulo) {
         Document pregunta = new Document("titulo", titulo)
-                .append("opciones", Collections.emptyList());
+                .append("opcionesIds", Collections.emptyList());
 
         preguntasCollection.insertOne(pregunta);
         ObjectId preguntaId = pregunta.getObjectId("_id");
@@ -89,7 +112,17 @@ public class EncuestaDAO {
     public void eliminarPregunta(ObjectId encuestaId, ObjectId preguntaId) {
         Document encuesta = collection.find(new Document("_id", encuestaId)).first();
         Document pregunta = preguntasCollection.find(new Document("_id", preguntaId)).first();
+        List<ObjectId> opcionesIds = pregunta.getList("opcionesIds", ObjectId.class);
         preguntasCollection.deleteOne(pregunta);
+
+        // Eliminar opciones y respuestas
+
+        for (ObjectId opcionId : opcionesIds) {
+            opcionesCollection.deleteMany(new Document("_id", opcionId));
+        }
+
+        respuestasCollection.deleteMany(new Document("preguntaId", preguntaId.toString()));
+
         encuesta.getList("preguntasIds", ObjectId.class).remove(preguntaId);
         collection.findOneAndReplace(new Document("_id", encuestaId), encuesta);
     }

@@ -2,8 +2,10 @@ package aed.dao;
 
 import aed.MongoDBConnection;
 import aed.models.OpcionPropertyBean;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -53,14 +55,11 @@ public class PreguntaDAO {
         return opcionesIds.size();
     }
 
-    public int obtenerNumeroRespuestasOpcion(ObjectId preguntaId , ObjectId opcionId){
-        Document pregunta = collection.find(new Document("_id", preguntaId)).first();
-        List<ObjectId> opcionesIds = pregunta.getList("opcionesIds", ObjectId.class);
+    public int obtenerNumeroRespuestasOpcion(ObjectId opcionId){
         int contador = 0;
-        for (ObjectId opcion : opcionesIds) {
-            if (opcion.equals(opcionId)) {
-                contador++;
-            }
+        FindIterable<Document> respuestas = respuestasCollection.find(Filters.eq("opcionId", opcionId.toString()));
+        for (Document doc : respuestas) {
+            contador++;
         }
         return contador;
     }
@@ -101,6 +100,8 @@ public class PreguntaDAO {
         opcionesIds.remove(idOpcion);
         pregunta.append("opcionesIds", opcionesIds);
         collection.findOneAndReplace(new Document("_id", idPregunta), pregunta);
+        // Eliminar respuestas
+        respuestasCollection.deleteMany(Filters.eq("opcionId", idOpcion.toString()));
 
         Document opcion = opcionesCollection.find(new Document("_id", idOpcion)).first();
         opcionesCollection.deleteOne(opcion);
